@@ -1,0 +1,13 @@
+# Compiled results
+*.hex
+*.elf
+
+# Compiled Libraries
+*.a
+
+# Compilation Map
+*.lst
+*.map
+
+# Object files
+*.o
