@@ -8,6 +8,7 @@
 # Compilation Map
 *.lst
 *.map
+*.d
 
 # Object files
 *.o
