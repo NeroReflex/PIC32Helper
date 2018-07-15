@@ -8,13 +8,13 @@
 #pragma config FNOSC = PRI
 #pragma config OSCIOFNC = ON // Output the frequency on the OSCO pin
 
-#include "../../FreeRTOS/src/FreeRTOS.h"
-#include "../../FreeRTOS/src/task.h"
+#include "../../../FreeRTOS/src/FreeRTOS.h"
+#include "../../../FreeRTOS/src/task.h"
 
 /* Define the start address and size of the three RAM regions. */
 
-uint8_t region1[32];
-uint8_t region2[64];
+uint8_t region1[1024 * 2];
+uint8_t region2[1024 * 12];
 
 /* Create an array of HeapRegion_t definitions, with an index for each of the three RAM regions, and terminating the array with a NULL address. The HeapRegion_t structures must appear in start address order, with the structure that contains the lowest start address appearing first. */
 
@@ -51,7 +51,7 @@ int main(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused))
 void blinkTask(void* pvParameters __attribute__ ((unused))) {
     // Task timing
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = portMS_TO_TICKS( 1000 );
+    const TickType_t xFrequency = 1000;
     
     // Keep track of the led status
     uint32_t leds = 0xFF;

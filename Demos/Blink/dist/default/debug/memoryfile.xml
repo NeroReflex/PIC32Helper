@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="dist/default/production/Blink.production.elf">                 
+  <executable name="dist/default/debug/Blink.debug.elf">                 
     <memory name="program">                 
       <units>bytes</units>                 
       <length>263312</length>                 
-      <used>34896</used>                     
-      <free>228416</free>                     
+      <used>36016</used>                     
+      <free>227296</free>                     
     </memory>                              
     <memory name="data">              
       <units>bytes</units>                 
-      <length>65536</length>                 
-      <used>15692</used>                     
-      <free>49844</free>                     
+      <length>66048</length>                 
+      <used>16716</used>                     
+      <free>49332</free>                     
     </memory>                              
   </executable>                            
 </project>                                 

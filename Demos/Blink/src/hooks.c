@@ -1,5 +1,5 @@
-#include "../../FreeRTOS/src/FreeRTOS.h"
-#include "../../FreeRTOS/src/task.h"
+#include "../../../FreeRTOS/src/FreeRTOS.h"
+#include "../../../FreeRTOS/src/task.h"
 
 #if ( configCHECK_FOR_STACK_OVERFLOW >= 1 )
 /*---------------------------------------------------------------------------*\

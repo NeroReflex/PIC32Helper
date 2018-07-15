@@ -67,167 +67,122 @@
     1 tab == 4 spaces!
 */
 
-#include "FreeRTOSConfig.h"
 
-#define portCONTEXT_SIZE 132
-#define portEPC_STACK_LOCATION	124
-#define portSTATUS_STACK_LOCATION 128
+/*
+ * The simplest possible implementation of pvPortMalloc().  Note that this
+ * implementation does NOT allow allocated memory to be freed again.
+ *
+ * See heap_2.c, heap_3.c and heap_4.c for alternative implementations, and the
+ * memory management pages of http://www.FreeRTOS.org for more information.
+ */
+#include <stdlib.h>
 
-/******************************************************************/
-.macro	portSAVE_CONTEXT
+/* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+all the API functions to use the MPU wrappers.  That should only be done when
+task.h is included from an application file. */
+#define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
-	/* Make room for the context. First save the current status so it can be
-	manipulated, and the cause and EPC registers so their original values are
-	captured. */
-	mfc0		k0, _CP0_CAUSE
-	addiu		sp,	sp, -portCONTEXT_SIZE
-	mfc0		k1, _CP0_STATUS
+#include "FreeRTOS.h"
+#include "task.h"
 
-	/* Also save s6 and s5 so they can be used.  Any nesting interrupts should
-	maintain the values of these registers across the ISR. */
-	sw			s6, 44(sp)
-	sw			s5, 40(sp)
-	sw			k1, portSTATUS_STACK_LOCATION(sp)
+#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
-	/* Prepare to enable interrupts above the current priority. */
-	srl			k0, k0, 0xa
-	ins 		k1, k0, 10, 6
-	ins			k1, zero, 1, 4
+#if( configSUPPORT_DYNAMIC_ALLOCATION == 0 )
+	#error This file must not be used if configSUPPORT_DYNAMIC_ALLOCATION is 0
+#endif
 
-	/* s5 is used as the frame pointer. */
-	add			s5, zero, sp
+/* A few bytes might be lost to byte aligning the heap start address. */
+#define configADJUSTED_HEAP_SIZE	( configTOTAL_HEAP_SIZE - portBYTE_ALIGNMENT )
 
-	/* Check the nesting count value. */
-	la			k0, uxInterruptNesting
-	lw			s6, (k0)
+/* Allocate the memory for the heap. */
+/* Allocate the memory for the heap. */
+#if( configAPPLICATION_ALLOCATED_HEAP == 1 )
+	/* The application writer has already defined the array used for the RTOS
+	heap - probably so it can be placed in a special segment or address. */
+	extern uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+#else
+	static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+#endif /* configAPPLICATION_ALLOCATED_HEAP */
 
-	/* If the nesting count is 0 then swap to the the system stack, otherwise
-	the system stack is already being used. */
-	bne			s6, zero, 1f
-	nop
+static size_t xNextFreeByte = ( size_t ) 0;
 
-	/* Swap to the system stack. */
-	la			sp, xISRStackTop
-	lw			sp, (sp)
+/*-----------------------------------------------------------*/
 
-	/* Increment and save the nesting count. */
-1:	addiu		s6, s6, 1
-	sw			s6, 0(k0)
+void *pvPortMalloc( size_t xWantedSize )
+{
+void *pvReturn = NULL;
+static uint8_t *pucAlignedHeap = NULL;
 
-	/* s6 holds the EPC value, this is saved after interrupts are re-enabled. */
-	mfc0 		s6, _CP0_EPC
+	/* Ensure that blocks are always aligned to the required number of bytes. */
+	#if( portBYTE_ALIGNMENT != 1 )
+	{
+		if( xWantedSize & portBYTE_ALIGNMENT_MASK )
+		{
+			/* Byte alignment required. */
+			xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+		}
+	}
+	#endif
 
-	/* Re-enable interrupts. */
-	mtc0		k1, _CP0_STATUS
+	vTaskSuspendAll();
+	{
+		if( pucAlignedHeap == NULL )
+		{
+			/* Ensure the heap starts on a correctly aligned boundary. */
+			pucAlignedHeap = ( uint8_t * ) ( ( ( portPOINTER_SIZE_TYPE ) &ucHeap[ portBYTE_ALIGNMENT ] ) & ( ~( ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) ) );
+		}
 
-	/* Save the context into the space just created.  s6 is saved again
-	here as it now contains the EPC value.  No other s registers need be
-	saved. */
-	sw			ra, 120(s5)
-	sw			s8, 116(s5)
-	sw			t9, 112(s5)
-	sw			t8, 108(s5)
-	sw			t7, 104(s5)
-	sw			t6, 100(s5)
-	sw			t5, 96(s5)
-	sw			t4, 92(s5)
-	sw			t3, 88(s5)
-	sw			t2, 84(s5)
-	sw			t1, 80(s5)
-	sw			t0, 76(s5)
-	sw			a3, 72(s5)
-	sw			a2, 68(s5)
-	sw			a1, 64(s5)
-	sw			a0, 60(s5)
-	sw			v1, 56(s5)
-	sw			v0, 52(s5)
-	sw			s6, portEPC_STACK_LOCATION(s5)
-	sw			$1, 16(s5)
+		/* Check there is enough room left for the allocation. */
+		if( ( ( xNextFreeByte + xWantedSize ) < configADJUSTED_HEAP_SIZE ) &&
+			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte )	)/* Check for overflow. */
+		{
+			/* Return the next free byte then increment the index past this
+			block. */
+			pvReturn = pucAlignedHeap + xNextFreeByte;
+			xNextFreeByte += xWantedSize;
+		}
 
-	/* s6 is used as a scratch register. */
-	mfhi		s6
-	sw			s6, 12(s5)
-	mflo		s6
-	sw			s6, 8(s5)
+		traceMALLOC( pvReturn, xWantedSize );
+	}
+	( void ) xTaskResumeAll();
 
-	/* Update the task stack pointer value if nesting is zero. */
-	la			s6, uxInterruptNesting
-	lw			s6, (s6)
-	addiu		s6, s6, -1
-	bne			s6, zero, 1f
-	nop
+	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+	{
+		if( pvReturn == NULL )
+		{
+			extern void vApplicationMallocFailedHook( void );
+			vApplicationMallocFailedHook();
+		}
+	}
+	#endif
 
-	/* Save the stack pointer. */
-	la			s6, uxSavedTaskStackPointer
-	sw			s5, (s6)
-1:
-	.endm
+	return pvReturn;
+}
+/*-----------------------------------------------------------*/
 
-/******************************************************************/
-.macro	portRESTORE_CONTEXT
+void vPortFree( void *pv )
+{
+	/* Memory cannot be freed using this scheme.  See heap_2.c, heap_3.c and
+	heap_4.c for alternative implementations, and the memory management pages of
+	http://www.FreeRTOS.org for more information. */
+	( void ) pv;
 
-	/* Restore the stack pointer from the TCB.  This is only done if the
-	nesting count is 1. */
-	la			s6, uxInterruptNesting
-	lw			s6, (s6)
-	addiu		s6, s6, -1
-	bne			s6, zero, 1f
-	nop
-	la			s6, uxSavedTaskStackPointer
-	lw			s5, (s6)
+	/* Force an assert as it is invalid to call this function. */
+	configASSERT( pv == NULL );
+}
+/*-----------------------------------------------------------*/
 
-	/* Restore the context. */
-1:	lw			s6, 8(s5)
-	mtlo		s6
-	lw			s6, 12(s5)
-	mthi		s6
-	lw			$1, 16(s5)
-	/* s6 is loaded as it was used as a scratch register and therefore saved
-	as part of the interrupt context. */
-	lw			s6, 44(s5)
-	lw			v0, 52(s5)
-	lw			v1, 56(s5)
-	lw			a0, 60(s5)
-	lw			a1, 64(s5)
-	lw			a2, 68(s5)
-	lw			a3, 72(s5)
-	lw			t0, 76(s5)
-	lw			t1, 80(s5)
-	lw			t2, 84(s5)
-	lw			t3, 88(s5)
-	lw			t4, 92(s5)
-	lw			t5, 96(s5)
-	lw			t6, 100(s5)
-	lw			t7, 104(s5)
-	lw			t8, 108(s5)
-	lw			t9, 112(s5)
-	lw			s8, 116(s5)
-	lw			ra, 120(s5)
+void vPortInitialiseBlocks( void )
+{
+	/* Only required when static memory is not cleared. */
+	xNextFreeByte = ( size_t ) 0;
+}
+/*-----------------------------------------------------------*/
 
-	/* Protect access to the k registers, and others. */
-	di
-	ehb
+size_t xPortGetFreeHeapSize( void )
+{
+	return ( configADJUSTED_HEAP_SIZE - xNextFreeByte );
+}
 
-	/* Decrement the nesting count. */
-	la			k0, uxInterruptNesting
-	lw			k1, (k0)
-	addiu		k1, k1, -1
-	sw			k1, 0(k0)
 
-	lw			k0, portSTATUS_STACK_LOCATION(s5)
-	lw			k1, portEPC_STACK_LOCATION(s5)
-
-	/* Leave the stack in its original state.  First load sp from s5, then
-	restore s5 from the stack. */
-	add			sp, zero, s5
-	lw			s5, 40(sp)
-	addiu		sp, sp,	portCONTEXT_SIZE
-
-	mtc0		k0, _CP0_STATUS
-	mtc0 		k1, _CP0_EPC
-	ehb
-	eret
-	nop
-
-	.endm
 

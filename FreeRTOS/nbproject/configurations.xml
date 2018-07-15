@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/FreeRTOSConfig.h</itemPath>
       <itemPath>src/FreeRTOS.h</itemPath>
       <itemPath>src/ISR_Support.h</itemPath>
       <itemPath>src/StackMacros.h</itemPath>
@@ -11,7 +12,6 @@
       <itemPath>src/deprecated_definitions.h</itemPath>
       <itemPath>src/event_groups.h</itemPath>
       <itemPath>src/list.h</itemPath>
-      <itemPath>src/message_buffer.h</itemPath>
       <itemPath>src/mpu_prototypes.h</itemPath>
       <itemPath>src/mpu_wrappers.h</itemPath>
       <itemPath>src/portable.h</itemPath>
@@ -19,11 +19,8 @@
       <itemPath>src/projdefs.h</itemPath>
       <itemPath>src/queue.h</itemPath>
       <itemPath>src/semphr.h</itemPath>
-      <itemPath>src/stack_macros.h</itemPath>
-      <itemPath>src/stream_buffer.h</itemPath>
       <itemPath>src/task.h</itemPath>
       <itemPath>src/timers.h</itemPath>
-      <itemPath>src/FreeRTOSConfig.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -34,14 +31,17 @@
                    projectFiles="true">
       <itemPath>src/croutine.c</itemPath>
       <itemPath>src/event_groups.c</itemPath>
+      <itemPath>src/heap_1.c</itemPath>
+      <itemPath>src/heap_2.c</itemPath>
+      <itemPath>src/heap_3.c</itemPath>
+      <itemPath>src/heap_4.c</itemPath>
+      <itemPath>src/heap_5.c</itemPath>
       <itemPath>src/list.c</itemPath>
       <itemPath>src/port.c</itemPath>
-      <itemPath>src/port_asm.S</itemPath>
       <itemPath>src/queue.c</itemPath>
-      <itemPath>src/stream_buffer.c</itemPath>
       <itemPath>src/tasks.c</itemPath>
       <itemPath>src/timers.c</itemPath>
-      <itemPath>src/heap_5.c</itemPath>
+      <itemPath>src/port_asm.S</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -63,7 +63,7 @@
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.10</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
@@ -290,6 +290,14 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="3.25"/>
       </PICkit3PlatformTool>
+      <item path="src/heap_1.c" ex="true" overriding="false">
+      </item>
+      <item path="src/heap_2.c" ex="true" overriding="false">
+      </item>
+      <item path="src/heap_3.c" ex="true" overriding="false">
+      </item>
+      <item path="src/heap_4.c" ex="true" overriding="false">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

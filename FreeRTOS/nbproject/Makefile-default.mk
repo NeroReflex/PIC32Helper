@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/croutine.c src/event_groups.c src/list.c src/port.c src/port_asm.S src/queue.c src/stream_buffer.c src/tasks.c src/timers.c src/heap_5.c
+SOURCEFILES_QUOTED_IF_SPACED=src/croutine.c src/event_groups.c src/heap_5.c src/list.c src/port.c src/queue.c src/tasks.c src/timers.c src/port_asm.S
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/croutine.o ${OBJECTDIR}/src/event_groups.o ${OBJECTDIR}/src/list.o ${OBJECTDIR}/src/port.o ${OBJECTDIR}/src/port_asm.o ${OBJECTDIR}/src/queue.o ${OBJECTDIR}/src/stream_buffer.o ${OBJECTDIR}/src/tasks.o ${OBJECTDIR}/src/timers.o ${OBJECTDIR}/src/heap_5.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/croutine.o.d ${OBJECTDIR}/src/event_groups.o.d ${OBJECTDIR}/src/list.o.d ${OBJECTDIR}/src/port.o.d ${OBJECTDIR}/src/port_asm.o.d ${OBJECTDIR}/src/queue.o.d ${OBJECTDIR}/src/stream_buffer.o.d ${OBJECTDIR}/src/tasks.o.d ${OBJECTDIR}/src/timers.o.d ${OBJECTDIR}/src/heap_5.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/croutine.o ${OBJECTDIR}/src/event_groups.o ${OBJECTDIR}/src/heap_5.o ${OBJECTDIR}/src/list.o ${OBJECTDIR}/src/port.o ${OBJECTDIR}/src/queue.o ${OBJECTDIR}/src/tasks.o ${OBJECTDIR}/src/timers.o ${OBJECTDIR}/src/port_asm.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/croutine.o.d ${OBJECTDIR}/src/event_groups.o.d ${OBJECTDIR}/src/heap_5.o.d ${OBJECTDIR}/src/list.o.d ${OBJECTDIR}/src/port.o.d ${OBJECTDIR}/src/queue.o.d ${OBJECTDIR}/src/tasks.o.d ${OBJECTDIR}/src/timers.o.d ${OBJECTDIR}/src/port_asm.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/croutine.o ${OBJECTDIR}/src/event_groups.o ${OBJECTDIR}/src/list.o ${OBJECTDIR}/src/port.o ${OBJECTDIR}/src/port_asm.o ${OBJECTDIR}/src/queue.o ${OBJECTDIR}/src/stream_buffer.o ${OBJECTDIR}/src/tasks.o ${OBJECTDIR}/src/timers.o ${OBJECTDIR}/src/heap_5.o
+OBJECTFILES=${OBJECTDIR}/src/croutine.o ${OBJECTDIR}/src/event_groups.o ${OBJECTDIR}/src/heap_5.o ${OBJECTDIR}/src/list.o ${OBJECTDIR}/src/port.o ${OBJECTDIR}/src/queue.o ${OBJECTDIR}/src/tasks.o ${OBJECTDIR}/src/timers.o ${OBJECTDIR}/src/port_asm.o
 
 # Source Files
-SOURCEFILES=src/croutine.c src/event_groups.c src/list.c src/port.c src/port_asm.S src/queue.c src/stream_buffer.c src/tasks.c src/timers.c src/heap_5.c
+SOURCEFILES=src/croutine.c src/event_groups.c src/heap_5.c src/list.c src/port.c src/queue.c src/tasks.c src/timers.c src/port_asm.S
 
 
 CFLAGS=
@@ -132,6 +132,12 @@ ${OBJECTDIR}/src/event_groups.o: src/event_groups.c  nbproject/Makefile-${CND_CO
 	@${RM} ${OBJECTDIR}/src/event_groups.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/event_groups.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/event_groups.o.d" -o ${OBJECTDIR}/src/event_groups.o src/event_groups.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/src/heap_5.o: src/heap_5.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/heap_5.o.d 
+	@${RM} ${OBJECTDIR}/src/heap_5.o 
+	@${FIXDEPS} "${OBJECTDIR}/src/heap_5.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/heap_5.o.d" -o ${OBJECTDIR}/src/heap_5.o src/heap_5.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/src/list.o: src/list.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/list.o.d 
@@ -150,12 +156,6 @@ ${OBJECTDIR}/src/queue.o: src/queue.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/src/queue.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/queue.o.d" -o ${OBJECTDIR}/src/queue.o src/queue.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/stream_buffer.o: src/stream_buffer.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src" 
-	@${RM} ${OBJECTDIR}/src/stream_buffer.o.d 
-	@${RM} ${OBJECTDIR}/src/stream_buffer.o 
-	@${FIXDEPS} "${OBJECTDIR}/src/stream_buffer.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/stream_buffer.o.d" -o ${OBJECTDIR}/src/stream_buffer.o src/stream_buffer.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
-	
 ${OBJECTDIR}/src/tasks.o: src/tasks.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/tasks.o.d 
@@ -167,12 +167,6 @@ ${OBJECTDIR}/src/timers.o: src/timers.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/src/timers.o.d 
 	@${RM} ${OBJECTDIR}/src/timers.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/timers.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/timers.o.d" -o ${OBJECTDIR}/src/timers.o src/timers.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/src/heap_5.o: src/heap_5.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src" 
-	@${RM} ${OBJECTDIR}/src/heap_5.o.d 
-	@${RM} ${OBJECTDIR}/src/heap_5.o 
-	@${FIXDEPS} "${OBJECTDIR}/src/heap_5.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/heap_5.o.d" -o ${OBJECTDIR}/src/heap_5.o src/heap_5.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
 else
 ${OBJECTDIR}/src/croutine.o: src/croutine.c  nbproject/Makefile-${CND_CONF}.mk
@@ -186,6 +180,12 @@ ${OBJECTDIR}/src/event_groups.o: src/event_groups.c  nbproject/Makefile-${CND_CO
 	@${RM} ${OBJECTDIR}/src/event_groups.o.d 
 	@${RM} ${OBJECTDIR}/src/event_groups.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/event_groups.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/event_groups.o.d" -o ${OBJECTDIR}/src/event_groups.o src/event_groups.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/src/heap_5.o: src/heap_5.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/heap_5.o.d 
+	@${RM} ${OBJECTDIR}/src/heap_5.o 
+	@${FIXDEPS} "${OBJECTDIR}/src/heap_5.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/heap_5.o.d" -o ${OBJECTDIR}/src/heap_5.o src/heap_5.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/src/list.o: src/list.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -205,12 +205,6 @@ ${OBJECTDIR}/src/queue.o: src/queue.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/src/queue.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/queue.o.d" -o ${OBJECTDIR}/src/queue.o src/queue.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/stream_buffer.o: src/stream_buffer.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src" 
-	@${RM} ${OBJECTDIR}/src/stream_buffer.o.d 
-	@${RM} ${OBJECTDIR}/src/stream_buffer.o 
-	@${FIXDEPS} "${OBJECTDIR}/src/stream_buffer.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/stream_buffer.o.d" -o ${OBJECTDIR}/src/stream_buffer.o src/stream_buffer.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
-	
 ${OBJECTDIR}/src/tasks.o: src/tasks.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/tasks.o.d 
@@ -222,12 +216,6 @@ ${OBJECTDIR}/src/timers.o: src/timers.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/src/timers.o.d 
 	@${RM} ${OBJECTDIR}/src/timers.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/timers.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/timers.o.d" -o ${OBJECTDIR}/src/timers.o src/timers.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/src/heap_5.o: src/heap_5.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src" 
-	@${RM} ${OBJECTDIR}/src/heap_5.o.d 
-	@${RM} ${OBJECTDIR}/src/heap_5.o 
-	@${FIXDEPS} "${OBJECTDIR}/src/heap_5.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/heap_5.o.d" -o ${OBJECTDIR}/src/heap_5.o src/heap_5.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
 endif
 
