@@ -10,6 +10,7 @@
       <itemPath>../../FreeRTOS/src/semphr.h</itemPath>
       <itemPath>../../FreeRTOS/src/task.h</itemPath>
       <itemPath>../../FreeRTOS/src/timers.h</itemPath>
+      <itemPath>src/ConfigPerformance.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -20,6 +21,7 @@
                    projectFiles="true">
       <itemPath>src/hooks.c</itemPath>
       <itemPath>src/main.c</itemPath>
+      <itemPath>src/ConfigPerformance.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -28,7 +30,6 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../FreeRTOS/src</Elem>
     <Elem>src</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
@@ -99,7 +100,7 @@
         <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="optimization-level" value=""/>
-        <property key="place-data-into-section" value="false"/>
+        <property key="place-data-into-section" value="true"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros" value=""/>

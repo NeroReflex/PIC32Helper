@@ -49,22 +49,49 @@
 #define configTICK_RATE_HZ						( ( TickType_t ) 1000 )
 #define configCPU_CLOCK_HZ						( 4000000UL )
 #define configPERIPHERAL_CLOCK_HZ				( 2500000UL )
+#define configMAX_TASK_NAME_LEN					( 8 )
+
+/* The length of the TickType_t in in bits:
+       0 => 32 bits
+       1 => 16 bits
+ */
+#define configUSE_16_BIT_TICKS					0
+
+/* The numer of priority levels that FreeRTOS can manage, up to a value of 32... */
 #define configMAX_PRIORITIES					( 5UL )
 #define configMINIMAL_STACK_SIZE				( 190 )
 #define configISR_STACK_SIZE					( 250 )
-#define configTOTAL_HEAP_SIZE					( ( size_t ) 28000 )
-#define configMAX_TASK_NAME_LEN					( 8 )
-#define configUSE_TRACE_FACILITY				0
-#define configUSE_16_BIT_TICKS					0
-#define configIDLE_SHOULD_YIELD					1
+
+/* If set to 1 the idle task will execute the IdleCallback, and then call taskYIELD() */
+#define configIDLE_SHOULD_YIELD					0
+
 #define configUSE_MUTEXES						1
 #define configCHECK_FOR_STACK_OVERFLOW			3
 #define configQUEUE_REGISTRY_SIZE				0
 #define configUSE_RECURSIVE_MUTEXES				1
-#define configUSE_MALLOC_FAILED_HOOK			1
 #define configUSE_APPLICATION_TASK_TAG			0
 #define configUSE_COUNTING_SEMAPHORES			1
 #define configGENERATE_RUN_TIME_STATS			0
+#define configUSE_TRACE_FACILITY				0
+
+/* If set to 1 the function
+   void vApplicationMallocFailedHook()
+   will be called after a failed malloc operation. */
+#define configUSE_MALLOC_FAILED_HOOK			1
+
+/* The static allocation usage should be used for (almost) constant-memory tasks,
+   that should NOT hang for a malloc fail. */
+#define configSUPPORT_STATIC_ALLOCATION         0
+
+/* Remember to activate the compilation of one of the heap_x.c files, and to provide
+   heap regions if heap_5.c is used. */
+#define configSUPPORT_DYNAMIC_ALLOCATION        1
+
+/* This has effect only when one of heap_1.c, heap_2.c and heap_4.c is used.
+   Heap will be represented as an array of configTOTAL_HEAP_SIZE bytes.
+   That array is called "The FreeRTOS heap".
+ */
+#define configTOTAL_HEAP_SIZE					( ( size_t ) 28000 )
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 			0
@@ -91,9 +118,8 @@ to exclude the API function. */
 
 /* Prevent C specific syntax being included in assembly files. */
 #ifndef __LANGUAGE_ASSEMBLY
-	//void vAssertCalled( const char *pcFileName, unsigned long ulLine );
-    #define configASSERT( x ) if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ); }
-	//#define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
+	void vAssertCalled( const char *pcFileName, unsigned long ulLine );
+    #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
 #endif
 
 /* The priority at which the tick interrupt runs.  This should probably be

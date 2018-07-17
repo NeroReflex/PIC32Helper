@@ -11,36 +11,36 @@
 #include "../../../FreeRTOS/src/FreeRTOS.h"
 #include "../../../FreeRTOS/src/task.h"
 
-/* Define the start address and size of the three RAM regions. */
+#include "ConfigPerformance.h"
 
-uint8_t region1[1024 * 2];
-uint8_t region2[1024 * 12];
+/*
+ * Set up the hardware ready to run this demo.
+ */
+static void prvSetupHardware( void );
 
-/* Create an array of HeapRegion_t definitions, with an index for each of the three RAM regions, and terminating the array with a NULL address. The HeapRegion_t structures must appear in start address order, with the structure that contains the lowest start address appearing first. */
+/* Define the size of the stack of the blink task */
+#define xBlinkTaskSize  /*200+*/configMINIMAL_STACK_SIZE
 
-const HeapRegion_t xHeapRegions[] =
-{
-    { region1, sizeof(region1) },
-    { region2, sizeof(region2) },
-    //{ RAM3_START_ADDRESS, RAM3_SIZE },
-    
-    { NULL, 0 } /* Marks the end of the array. */
-};
+/* The refenrece to the blink task handler */
+TaskHandle_t xBlinkTaskHandle;
 
-TaskHandle_t xBlinkTaskHandle = NULL;
-void blinkTask(void* pvParameters);
+/* Structure that will hold the TCB of the task being created. */
+StaticTask_t xBlinkTaskBuffer;
+
+/* Buffer that the task being created will use as its stack.  Note this is
+   an array of StackType_t variables.  The size of StackType_t is dependent on
+   the RTOS port. */
+StackType_t xBlinkStack[ xBlinkTaskSize ];
+portTASK_FUNCTION_PROTO( blinkTask, pvParameters );
 
 int main(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused))) {
-    // This is super-important, configurates the heap_5
-    vPortDefineHeapRegions(xHeapRegions);
+    prvSetupHardware();
     
-    BaseType_t xBlinkTaskCreation = xTaskCreate(blinkTask, "Blink", 20 + configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, &xBlinkTaskHandle);
+    BaseType_t xBlinkTaskCreation = xTaskCreate(blinkTask, "Blink", xBlinkTaskSize, NULL, tskIDLE_PRIORITY, &xBlinkTaskHandle);
+    //xBlinkTaskHandle = xTaskCreateStatic(blinkTask, "Blink", xBlinkTaskSize, NULL, tskIDLE_PRIORITY + 1, xBlinkStack, &xBlinkTaskBuffer);
     
     // Start the RTOS scheduler
     vTaskStartScheduler();
-    
-    // Destroy the task if it was creates successfully
-    if (xBlinkTaskCreation == pdPASS) vTaskDelete(xBlinkTaskHandle);
     
     // The scheduler crashes on a malloc fail
     vApplicationMallocFailedHook();
@@ -48,10 +48,10 @@ int main(int argc __attribute__ ((unused)), char** argv __attribute__ ((unused))
     return 1;
 }
 
-void blinkTask(void* pvParameters __attribute__ ((unused))) {
+portTASK_FUNCTION( blinkTask, pvParameters ) {
     // Task timing
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 1000;
+    const TickType_t xFrequency = portMS_TO_TICKS( 500 );
     
     // Keep track of the led status
     uint32_t leds = 0xFF;
@@ -60,10 +60,24 @@ void blinkTask(void* pvParameters __attribute__ ((unused))) {
     TRISB = ~(0x10);
     
     for (;;) {
-        // A XOR of the current PORT with FF will flip all bits
+        // Flip all desired bits
         LATB = (leds ^= 0xFFFFFFFF) & 0x10;
         
         // Execution frequency
         vTaskDelayUntil(&xLastWakeTime, xFrequency );
     }
 }
+
+/*-----------------------------------------------------------*/
+
+static void prvSetupHardware( void )
+{
+	/* Configure the hardware for maximum performance. */
+	vHardwareConfigurePerformance();
+
+	/* Setup to use the external interrupt controller. */
+	vHardwareUseMultiVectoredInterrupts();
+
+	portDISABLE_INTERRUPTS();
+}
+/*-----------------------------------------------------------*/

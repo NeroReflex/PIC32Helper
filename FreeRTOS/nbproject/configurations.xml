@@ -21,6 +21,7 @@
       <itemPath>src/semphr.h</itemPath>
       <itemPath>src/task.h</itemPath>
       <itemPath>src/timers.h</itemPath>
+      <itemPath>src/stream_buffer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -34,7 +35,6 @@
       <itemPath>src/heap_1.c</itemPath>
       <itemPath>src/heap_2.c</itemPath>
       <itemPath>src/heap_3.c</itemPath>
-      <itemPath>src/heap_4.c</itemPath>
       <itemPath>src/heap_5.c</itemPath>
       <itemPath>src/list.c</itemPath>
       <itemPath>src/port.c</itemPath>
@@ -42,6 +42,9 @@
       <itemPath>src/tasks.c</itemPath>
       <itemPath>src/timers.c</itemPath>
       <itemPath>src/port_asm.S</itemPath>
+      <itemPath>src/sys_tasks.c</itemPath>
+      <itemPath>src/stream_buffer.c</itemPath>
+      <itemPath>src/heap_4.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -291,12 +294,60 @@
         <property key="voltagevalue" value="3.25"/>
       </PICkit3PlatformTool>
       <item path="src/heap_1.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
       <item path="src/heap_2.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
       <item path="src/heap_3.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
-      <item path="src/heap_4.c" ex="true" overriding="false">
+      <item path="src/heap_5.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
     </conf>
   </confs>
