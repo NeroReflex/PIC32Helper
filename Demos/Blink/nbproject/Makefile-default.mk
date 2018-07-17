@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/hooks.c src/main.c src/ConfigPerformance.c
+SOURCEFILES_QUOTED_IF_SPACED=src/hooks.c src/main.c src/ConfigPerformance.c src/blink.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/hooks.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/ConfigPerformance.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/hooks.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/ConfigPerformance.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/hooks.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/ConfigPerformance.o ${OBJECTDIR}/src/blink.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/hooks.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/ConfigPerformance.o.d ${OBJECTDIR}/src/blink.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/hooks.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/ConfigPerformance.o
+OBJECTFILES=${OBJECTDIR}/src/hooks.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/ConfigPerformance.o ${OBJECTDIR}/src/blink.o
 
 # Source Files
-SOURCEFILES=src/hooks.c src/main.c src/ConfigPerformance.c
+SOURCEFILES=src/hooks.c src/main.c src/ConfigPerformance.c src/blink.c
 
 
 CFLAGS=
@@ -124,6 +124,12 @@ ${OBJECTDIR}/src/ConfigPerformance.o: src/ConfigPerformance.c  nbproject/Makefil
 	@${RM} ${OBJECTDIR}/src/ConfigPerformance.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/ConfigPerformance.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fdata-sections -MMD -MF "${OBJECTDIR}/src/ConfigPerformance.o.d" -o ${OBJECTDIR}/src/ConfigPerformance.o src/ConfigPerformance.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/src/blink.o: src/blink.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/blink.o.d 
+	@${RM} ${OBJECTDIR}/src/blink.o 
+	@${FIXDEPS} "${OBJECTDIR}/src/blink.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPICkit3PlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fdata-sections -MMD -MF "${OBJECTDIR}/src/blink.o.d" -o ${OBJECTDIR}/src/blink.o src/blink.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
 else
 ${OBJECTDIR}/src/hooks.o: src/hooks.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -142,6 +148,12 @@ ${OBJECTDIR}/src/ConfigPerformance.o: src/ConfigPerformance.c  nbproject/Makefil
 	@${RM} ${OBJECTDIR}/src/ConfigPerformance.o.d 
 	@${RM} ${OBJECTDIR}/src/ConfigPerformance.o 
 	@${FIXDEPS} "${OBJECTDIR}/src/ConfigPerformance.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fdata-sections -MMD -MF "${OBJECTDIR}/src/ConfigPerformance.o.d" -o ${OBJECTDIR}/src/ConfigPerformance.o src/ConfigPerformance.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/src/blink.o: src/blink.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/blink.o.d 
+	@${RM} ${OBJECTDIR}/src/blink.o 
+	@${FIXDEPS} "${OBJECTDIR}/src/blink.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fdata-sections -MMD -MF "${OBJECTDIR}/src/blink.o.d" -o ${OBJECTDIR}/src/blink.o src/blink.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
 endif
 
