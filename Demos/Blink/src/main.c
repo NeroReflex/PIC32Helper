@@ -19,7 +19,7 @@
 static void prvSetupHardware( void );
 
 /* Define the size of the stack of the blink task */
-#define xBlinkTaskSize  /*200+*/configMINIMAL_STACK_SIZE
+#define xBlinkTaskSize  configMINIMAL_STACK_SIZE
 
 /* The refenrece to the blink task handler */
 TaskHandle_t xBlinkTaskHandle;
