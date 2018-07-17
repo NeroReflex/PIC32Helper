@@ -17,3 +17,6 @@
 /FreeRTOS/dist/default/
 /Demos/Blink/dist/default/
 /Demos/Blink/build/default/
+
+# Dist directories
+dist/
