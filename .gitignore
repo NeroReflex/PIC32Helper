@@ -9,6 +9,11 @@
 *.lst
 *.map
 *.d
+*.disasm
 
 # Object files
 *.o
+/FreeRTOS/build/default/
+/FreeRTOS/dist/default/
+/Demos/Blink/dist/default/
+/Demos/Blink/build/default/
